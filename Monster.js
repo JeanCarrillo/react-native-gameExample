@@ -54,16 +54,14 @@ class Monster extends Component {
     directionX /= len;
     directionY /= len;
     // Adjust speed here (distance per step)
-    this.speedX = directionX * 2
-    this.speedY = directionY * 2
+    this.speedX = directionX * 5
+    this.speedY = directionY * 5
   }
-
 
   move() {
     this.monsterStyle.top += this.speedY;
     this.monsterStyle.left += this.speedX;
   }
 }
-
 
 export default Monster;

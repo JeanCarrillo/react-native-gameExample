@@ -17,6 +17,12 @@ class App extends React.Component {
     };
   }
 
+  updateScore = (value) => {
+    const { monstersKilled } = this.state;
+    const newCounter = monstersKilled + value;
+    this.setState({ monstersKilled: newCounter });
+  }
+
   render() {
     const { monstersKilled, gameover } = this.state;
     return (
@@ -26,13 +32,17 @@ class App extends React.Component {
             source={require('./assets/character-left.png')}
             style={styles.player}
           />
-          <Monsters checkGameOver={this.checkGameOver}/>
+          <Monsters checkGameOver={this.checkGameOver} updateScore={this.updateScore} />
           {
             gameover ?
-              <Text style={{ position: 'absolute', top: 150, left: 100, color: 'red', fontSize: 30 }}>
-                GAME OVER
-                Score: {monstersKilled}
-              </Text>
+              <View>
+                <Text style={{ position: 'absolute', top: 150, left: 100, color: 'red', fontSize: 40 }}>
+                  GAME OVER
+                </Text>
+                <Text style={{ position: 'absolute', top: 195, left: 100, color: 'red', fontSize: 40 }}>
+                  Score: {monstersKilled}
+                </Text>
+              </View>
               : null
           }
         </ImageBackground>
