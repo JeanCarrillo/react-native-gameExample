@@ -1,50 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
-import Monster from './Monster';
+import Monsters from './Monsters';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.monsterSpeedGeneration = 100;
     this.state = {
-      monsters: [],
       monstersKilled: 0,
       gameover: false,
     }
   }
 
-  componentDidMount() {
-    this.generatingMonsters = setInterval(
-      () => this.generateMonster()
-      , this.monsterSpeedGeneration);
-  }
-
-  increaseDifficulty() {
-    this.monsterSpeedGeneration -= 100;
-  }
-
-  generateMonster() {
-    const { monsters } = this.state;
-    monsters.push('zombie2');
-    this.setState({ monsters });
-  }
-
-  killMonster = (index) => {
-    const { monsters, monstersKilled } = this.state;
-    monsters[index] = "";
-    newCounter = monstersKilled + 1
-    this.setState({ monsters, monstersKilled: newCounter });
-  }
-
   checkGameOver = (value) => {
     if (value) {
       this.setState({ gameover: true });
-      clearInterval(this.generatingMonsters);
     };
   }
 
   render() {
-    const { monsters, monstersKilled, gameover } = this.state;
+    const { monstersKilled, gameover } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground source={require('./assets/dirt.jpg')} style={{ width: '100%', height: '100%' }} >
@@ -52,19 +26,7 @@ class App extends React.Component {
             source={require('./assets/character-left.png')}
             style={styles.player}
           />
-          {
-            monsters.map((monster, monsterIndex) => (
-              monsters[monsterIndex] !== "" ?
-                <Monster
-                  monster={monster}
-                  key={`monsterId-${monsterIndex}`}
-                  index={monsterIndex}
-                  checkGameOver={this.checkGameOver}
-                  killMonster={this.killMonster}
-                />
-                : null
-            ))
-          }
+          <Monsters checkGameOver={this.checkGameOver}/>
           {
             gameover ?
               <Text style={{ position: 'absolute', top: 150, left: 100, color: 'red', fontSize: 30 }}>
